@@ -8,7 +8,7 @@ Include Irvine32.Inc
 .Data
 ; Poner aqui las variables a utilizar
 cad1 byte "Primitivas de cadenas"
-;Arr1 
+
 .Code 
 Main Proc
     Call ClrScr       ; Limpia la Pantalla
