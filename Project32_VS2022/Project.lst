@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.34.31937.0	    04/07/24 07:34:40
-PrimitivaCadenas1.as					     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.34.31937.0	    04/14/24 07:56:11
+cadenas14042034.as					     Page 1 - 1
 
 
-				Title PrimitivaCadenas1.asm
+				Title cadenas14042034.asm
 				;@Author : Brandon Alexander Castro Contreras
 				;@Country: El Salvador, Centro America
 				;@eMail  2505022021@mail.utec.edu.sv
@@ -28,36 +28,60 @@ Microsoft (R) Macro Assembler Version 14.34.31937.0	    04/07/24 07:34:40
 
  00000000			.Data
 				; Poner aqui las variables a utilizar
- 00000000 50 72 69 6D 69	cad1 byte "Primitivas de cadenas"
-	   74 69 76 61 73
-	   20 64 65 20 63
-	   61 64 65 6E 61
-	   73
-				;Arr1 
+ 00000000 0001 000A 0014	Arr1 Word 1,10,20,30,40
+	   001E 0028
+ 0000000A  0002 0032 003C	    Word 2, 50,60,70,80
+	   0046 0050
+ 00000014  0003 005A 0064	    Word 3,90,100,110,120
+	   006E 0078
+ 0000001E = 0000000F		    nLen1 = ($-Arr1) / Type Arr1
+
  00000000			.Code 
  00000000			Main Proc
  00000000  E8 00000000 E	    Call ClrScr       ; Limpia la Pantalla
 				    
- 00000005  BE 00000000 R	    MOV ESI, OffSet cad1
- 0000000A  B9 00000015		    MOV ECX, LengthOf cad1
+ 00000005  BE 00000000 R	    Mov ESI, OffSet Arr1
+ 0000000A  B9 0000000F		    Mov ECX, nLen1          ; Cantidad de valores
+ 0000000F  BB 00000005		    Mov EBX, LengthOf Arr1  ; Cantidad de valores por fila
+
+ 00000014  B8 0000000F		    Mov EAX, nLen1
+ 00000019  BA 00000000		    Mov EDX, 0
+ 0000001E  F7 F3		    Div EBX                 ; Cantidad de filas
+ 00000020  8B CB		    Mov ECX, EBX
+
+ 00000022  B9 0000000F		    Mov ECX, nLen1
+ 00000027  B8 00000000		    Mov EAX, 0
+
+ 0000002C			Inicio1:
+ 0000002C  66| AD		    LodSW
+ 0000002E  E8 00000000 E	    Call WriteDec
+ 00000033  B0 20		    Mov AL, " "
+ 00000035  E8 00000000 E	    Call WriteChar
+ 0000003A  E2 F0		    Loop Inicio1
+
+ 0000003C  E8 00000000 E	    Call CrLf
+ 00000041  E8 00000000 E	    Call CrLf
+ 00000046  BE 00000000 R	    Mov ESI, Offset Arr1
+ 0000004B  B9 00000004		    Mov ECX, 4
+ 00000050  B8 00000000		    Mov EAX, 0
+
+ 00000055			Inicio2:
+ 00000055  51			    Push  ECX
+ 00000056  B9 00000005		    Mov ECX, 5
+ 0000005B  E2 F8		    Loop  Inicio2
 
 
- 0000000F			    Inicio1:
- 0000000F  AC			        LodSB
- 00000010  E8 00000000 E	        Call WriteChar
- 00000015  E2 F8		    lOOP Inicio1
- 00000017  E8 00000000 E	    Call CrLf
 
- 0000001C  E8 00000000 E	    Call CrLf         ; Hace un Salto de linea
- 00000021  E8 00000000 E	    Call WaitMsg      ; Espera a que presionen <ENTER>
+ 0000005D  E8 00000000 E	    Call CrLf         ; Hace un Salto de linea
+ 00000062  E8 00000000 E	    Call WaitMsg      ; Espera a que presionen <ENTER>
 				    Exit              ; Termina el programa
- 00000026  6A 00	   *	    push   +000000000h
- 00000028  E8 00000000 E   *	    call   ExitProcess
- 0000002D			Main EndP
+ 00000067  6A 00	   *	    push   +000000000h
+ 00000069  E8 00000000 E   *	    call   ExitProcess
+ 0000006E			Main EndP
 
 				End Main
-Microsoft (R) Macro Assembler Version 14.34.31937.0	    04/07/24 07:34:40
-PrimitivaCadenas1.as					     Symbols 2 - 1
+Microsoft (R) Macro Assembler Version 14.34.31937.0	    04/14/24 07:56:11
+cadenas14042034.as					     Symbols 2 - 1
 
 
 
@@ -150,8 +174,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000015 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002D Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000001E Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000006E Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -199,8 +223,9 @@ HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002D Public STDCALL
-  Inicio1  . . . . . . . . . . .	L Near	 0000000F _TEXT	
+Main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000006E Public STDCALL
+  Inicio1  . . . . . . . . . . .	L Near	 0000002C _TEXT	
+  Inicio2  . . . . . . . . . . .	L Near	 00000055 _TEXT	
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -279,6 +304,7 @@ Symbols:
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
 ALT_MASK . . . . . . . . . . . .	Number	 00000003h   
+Arr1 . . . . . . . . . . . . . .	Word	 00000000 _DATA	
 CAPSLOCK_ON  . . . . . . . . . .	Number	 00000080h   
 CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
 CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
@@ -481,7 +507,6 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
-cad1 . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
@@ -493,6 +518,7 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+nLen1  . . . . . . . . . . . . .	Number	 0000000Fh   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
